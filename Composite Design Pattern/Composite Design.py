@@ -52,7 +52,7 @@ class Rectangel(CompositeShape):
         l1 = Line(p[0], p[1])
         l2 = Line(p[1], p[2])
         l3 = Line(p[2], p[3])
-        l4 = Line(p[3],p[4])
+        l4 = Line(p[3],p[0])
         # l1.draw()
         self.list.append(l1)
         self.list.append(l2)
@@ -76,17 +76,17 @@ class Triangle(CompositeShape):
         self.list.append(l3)
 
 
-class Flag(CompositeShape):
+'''class Flag(CompositeShape):
     def buildShape(self):
         r=Rectangel()
         c=Circle()
         self.list.append(r)
-        self.list.append(c)
+        self.list.append(c)'''
 
 
 
 t=Rectangel()
-t.draw([[10,20],[20,20],[40,50],[10,20]])
+t.draw([[5,20],[20,20],[20,50],[5,50]])
 #t.draw()
 c.pack()
 top.mainloop()
