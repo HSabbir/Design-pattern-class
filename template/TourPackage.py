@@ -1,4 +1,4 @@
-from abc import abstractmethod,ABC
+'''from abc import abstractmethod,ABC
 class TourPackage(ABC):
 
     def hire(self):
@@ -33,4 +33,18 @@ class Luxury(TourPackage):
         print('firci Air E')
 
 client1= Luxury()
-client1.hire()
+client1.hire()'''
+
+from tkinter import Tk, Canvas, Frame, BOTH
+
+master = Tk()
+
+w = Canvas(master, width=200, height=100)
+w.pack()
+
+w.create_line(0, 0, 200, 100)
+w.create_line(0, 100, 200, 0, fill="red", dash=(4, 4))
+
+w.create_rectangle(50, 25, 150, 75, fill="blue")
+
+master.mainloop()

@@ -1,180 +1,14 @@
 
-
-import turtle
-
+from tkinter import Tk, Canvas, Frame, BOTH
 
 from abc import abstractmethod,ABC
 
-class IShape(ABC):
+top = Tk()
 
-    @abstractmethod
-    def draw(self):
-        pass
+top.geometry("400x250+300+300")
 
-class Line(IShape):
-
-    def draw(self,pos):
-        pygame.draw.line(display_surface, green,(60, 300), (120, 300), 100)
-
-
-class Circle(IShape):
-
-    def draw(self):
-        print('draw circle')
-
-class CompositeShape(IShape,ABC):
-    def __init__(self):
-        self.list=[]
-    @abstractmethod
-    def buildShape(self):
-        pass
-
-    def draw(self):
-        self.buildShape()
-        for i in self.list:
-            i.draw()
-
-class Rectangel(CompositeShape):
-
-    def buildShape(self):
-        l=Line()
-        self.list.append(l)
-        self.list.append(l)
-        self.list.append(l)
-        self.list.append(l)
-
-
-class Triangle(CompositeShape):
-
-    def buildShape(self):
-        l = Line()
-        self.list.append(l)
-        self.list.append(l)
-        self.list.append(l)
-
-
-class Flag(CompositeShape):
-    def buildShape(self):
-        r=Rectangel()
-        c=Circle()
-        self.list.append(r)
-        self.list.append(c)
-
-import pygame
-
-# activate the pygame library .
-# initiate pygame and give permission
-# to use pygame's functionality.
-pygame.init()
-
-# define the RGB value
-# for white, green,
-# blue, black, red
-# colour respectively.
-white = (255, 255, 255)
-green = (0, 255, 0)
-blue = (0, 0, 128)
-black = (0, 0, 0)
-red = (255, 0, 0)
-
-# assigning values to X and Y variable
-X = 400
-Y = 400
-
-# create the display surface object
-# of specific dimension..e(X,Y).
-display_surface = pygame.display.set_mode((X, Y))
-
-# set the pygame window name
-pygame.display.set_caption('Drawing')
-
-# completely fill the surface object
-# with white colour
-display_surface.fill(white)
-
-# draw a polygon using draw.polygon()
-# method of pygame.
-# pygame.draw.polygon(surface, color, pointlist, thickness)
-# thickness of line parameter is optional.
-'''pygame.draw.polygon(display_surface, blue,
-                    [(146, 0), (291, 106),
-                     (236, 277), (56, 277), (0, 106)])'''
-
-# draw a line using draw.line()
-# method of pygame.
-# pygame.draw.line(surface, color,
-# start point, end point, thickness)
-
-
-# draw a circle using draw.circle()
-# method of pygame.
-# pygame.draw.circle(surface, color,
-# center point, radius, thickness)
-'''pygame.draw.circle(display_surface,
-                   green, (300, 50), 20, 0)'''
-
-# draw a ellipse using draw.ellipse()
-# method of pygame.
-# pygame.draw.ellipse(surface, color,
-# bounding rectangle, thickness)
-'''pygame.draw.ellipse(display_surface, black,
-                    (300, 250, 40, 80), 1)'''
-
-# draw a rectangle using draw.rect()
-# method of pygame.
-# pygame.draw.rect(surface, color,
-# rectangle tuple, thickness)
-# thickness of line parameter is optional.
-'''pygame.draw.rect(display_surface, black,
-                 (150, 300, 100, 50))'''
-
-# infinite loop
-while True:
-
-    # iterate over the list of Event objects
-    # that was returned by pygame.event.get() method.
-    for event in pygame.event.get():
-
-        # if event object type is QUIT
-        # then quitting the pygame
-        # and program both.
-        if event.type == pygame.QUIT:
-            # deactivates the pygame library
-            pygame.quit()
-
-            # quit the program.
-            quit()
-
-            # Draws the surface object to the screen.
-        pygame.display.update()
-
-
-'''l=Line()
-a = turtle.Turtle()      #instantiate a new turtle object called 'a'
-a.hideturtle()           #make the turtle invisible
-a.penup()                #don't draw when turtle moves
-a.goto(-200, -200)       #move the turtle to a location
-a.showturtle()           #make the turtle visible
-a.pendown()              #draw when the turtle moves
-a.goto(50, 50)'''
-
-
-'''for i in range(4):
-    skk.forward(50)
-    skk.right(90)
-
-turtle.done()
-
-
-skk.goto(-100,-88)
-skk.setpos(100,100)
-skk.setpos(100,0)
-skk.setpos(0,0)
-skk.left(60)
-skk.forward(80)
-turtle.done()'''
-
-'''from abc import abstractmethod,ABC
+# creating a simple canvas
+c = Canvas()
 
 class IShape(ABC):
 
@@ -184,13 +18,21 @@ class IShape(ABC):
 
 class Line(IShape):
 
+    def __init__(self,p1,p2):
+        #super.__init__()
+        self.x1=p1[0]
+        self.x2=p2[0]
+        self.y1=p1[1]
+        self.y2=p2[1]
+
     def draw(self):
-        print('draw line')
+        c.create_line(self.x1,self.y1,self.x2,self.y2)
 
 class Circle(IShape):
 
-    def draw(self):
-        print('draw circle')
+
+    def draw(self,p1,p2):
+        c.create_oval(p1[0],p1[1],p2[0],p2[1])
 
 class CompositeShape(IShape,ABC):
     def __init__(self):
@@ -199,28 +41,39 @@ class CompositeShape(IShape,ABC):
     def buildShape(self):
         pass
 
-    def draw(self):
-        self.buildShape()
+    def draw(self,p):
+        self.buildShape(p)
         for i in self.list:
             i.draw()
 
 class Rectangel(CompositeShape):
 
-    def buildShape(self):
-        l=Line()
-        self.list.append(l)
-        self.list.append(l)
-        self.list.append(l)
-        self.list.append(l)
+    def buildShape(self,p):
+        l1 = Line(p[0], p[1])
+        l2 = Line(p[1], p[2])
+        l3 = Line(p[2], p[3])
+        l4 = Line(p[3],p[4])
+        # l1.draw()
+        self.list.append(l1)
+        self.list.append(l2)
+        self.list.append(l3)
+        self.list.append(l4)
 
 
 class Triangle(CompositeShape):
 
-    def buildShape(self):
-        l = Line()
-        self.list.append(l)
-        self.list.append(l)
-        self.list.append(l)
+    '''def __init__(self,p1,p2,p3):
+        self.point=[p1,p2,p3]'''
+
+    def buildShape(self,p):
+        #print(p1)
+        l1 = Line(p[0],p[1])
+        l2 = Line(p[1],p[2])
+        l3 = Line(p[2],p[0])
+        #l1.draw()
+        self.list.append(l1)
+        self.list.append(l2)
+        self.list.append(l3)
 
 
 class Flag(CompositeShape):
@@ -231,5 +84,59 @@ class Flag(CompositeShape):
         self.list.append(c)
 
 
-f=Flag()
-f.draw()'''
+
+t=Rectangel()
+t.draw([[10,20],[20,20],[40,50],[10,20]])
+#t.draw()
+c.pack()
+top.mainloop()
+
+
+'''class Example(Frame):
+
+    def __init__(self):
+        super().__init__()
+
+        self.initUI()
+
+
+    def initUI(self):
+        self.master.title("Shape")
+        self.pack(fill=BOTH, expand=1)
+
+        canvas = Canvas(self)
+        canvas.create_line(15, 25, 200, 36)
+        canvas.create_line(300, 35, 300, 200, )
+        canvas.create_line(55, 85, 155, 85, 105, 180, 55, 85)
+
+        canvas.pack(fill=BOTH, expand=1)
+
+
+def main():
+
+    root = Tk()
+    ex = Example()
+    root.geometry("400x250+300+300")
+    root.mainloop()
+
+
+if __name__ == '__main__':
+    main()'''
+
+
+
+'''top = Tk()
+
+top.geometry("200x200")
+
+# creating a simple canvas
+c = Canvas(top, bg="pink", height="200", width=200)
+
+
+def draw():
+
+    c.create_line(15, 25, 200, 36)
+    c.pack()
+    top.mainloop()
+
+draw()'''
