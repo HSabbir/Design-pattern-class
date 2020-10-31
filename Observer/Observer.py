@@ -1,4 +1,4 @@
-from Interface import implements, Interface
+from abc import ABC,abstractmethod
 
 class Youtube():
     def __init__(self):
@@ -19,23 +19,24 @@ class Youtube():
         self.notify()
 
 
-class Iobj(Interface):
+class Iobj(ABC):
+    @abstractmethod
     def getNotification(self):
         pass
 
-class EmailSubs(implements(Iobj)):
+class EmailSubs(Iobj):
 
     def getNotification(self):
         print('Email Subscribe')
 
 
-class Account(implements(Iobj)):
+class Account(Iobj):
 
     def getNotification(self):
         print('Account Subscribe')
 
 
-class SMS(implements(Iobj)):
+class SMS(Iobj):
 
     def getNotification(self):
         print('SMS Subscribe')

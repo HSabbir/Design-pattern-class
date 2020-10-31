@@ -10,6 +10,7 @@ top.geometry("400x250+300+300")
 # creating a simple canvas
 c = Canvas()
 
+
 class IShape(ABC):
 
     @abstractmethod
